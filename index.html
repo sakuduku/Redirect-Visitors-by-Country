@@ -1,0 +1,29 @@
+<script>
+var endpoint = 'https://apip.cc/json';
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var response = JSON.parse(this.responseText);
+        if(response.status !== 'success') {
+            console.log('Query failed: ' + response.message);
+            return;
+        }
+        // Redirect based on the country code
+        switch(response.CountryCode) {
+            case "GB":
+                window.location.replace("https://google.co.uk/");
+                break;
+            case "CA":
+                window.location.replace("https://google.ca/");
+                break;
+            case "SG":
+                window.location.replace("https://google.com.sg/");
+                break;
+            default:
+                window.location.replace("https://google.com/");
+        }
+    }
+};
+xhr.open('GET', endpoint, true);
+xhr.send();
+</script>
